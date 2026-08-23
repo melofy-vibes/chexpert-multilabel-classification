@@ -1,0 +1,16 @@
+# Python 3.13+
+numpy
+pandas
+matplotlib
+Pillow
+tqdm
+scikit-learn
+seaborn
+
+# PyTorch stack used by the notebook run.
+# CUDA/CPU wheel selection should follow the official PyTorch instructions.
+torch==2.11.0
+torchvision==0.26.0
+
+# Grad-CAM
+pytorch-grad-cam
