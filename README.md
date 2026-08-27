@@ -136,7 +136,6 @@ Macro-averaged metrics on Mehraveh's local test set and the official CheXpert va
 
 - CheXpert labels are automatically extracted from radiology reports and contain label noise and uncertainty.
 - The uncertainty-handling strategy is a modeling choice rather than a proven-optimal strategy.
-- The official CheXpert validation set is approximately 200 studies and is therefore much smaller than the local test set.
 - Grad-CAM indicates correlation with model output, not clinical or diagnostic validity.
 
 ---
@@ -387,20 +386,18 @@ Both pipelines use custom **class-weighted binary cross-entropy** losses to pena
 |---|---|---|---|
 | Primary architecture | ImageNet-pretrained DenseNet-121 | 4-layer CNN + selective Mamba-style scan | Frozen EfficientNetB3 + GAT; Bayesian CNN |
 | Modeling strategy | Pretrained CNN feature extraction | Compact CNN + state-space sequence modeling | Disease relationships + uncertainty modeling |
-| Parameters | Not reported in README | **263,070** | Not reported in README |
 | Training time | **1 h 50 min** | **2.5 h** | **5 h** |
 | Training data | CheXpert training set with local split | ~200,000 training studies | ~200,000 training studies |
 | Local train/val/test split | **Yes — patient-level, 0.1 val + 0.1 test** | **No** | **No** |
 | Validation size | Local validation = 10% of training data | ~202 studies | ~200 studies |
-| Held-out local test | **Yes** | **No** | **No** |
 | Local Test Evaluation | macro AUROC **0.7843** | Not reported | Not reported |
 | Official CheXpert validation | **AUROC 0.8271** | Validation mean AUROC **0.7722** | Intermediate AUC reported as **0.65–0.75 Bayesian / 0.70–0.78 GNN** |
 | Threshold strategy | Thresholds selected on local validation, then frozen | 0.5 used in reported confusion matrix | Disease-specific post-training threshold tuning |
 | Uncertainty handling | Configurable uncertainty strategies | Fixed label-mapping policy | Bayesian CNN explicitly models epistemic uncertainty |
 | Explainability / analysis | Grad-CAM, ROC/PR curves, per-pathology metrics | ROC curves, confusion matrix, per-class AUROC | Attention and calibration considerations |
 | Main strength | **Strongest evaluation protocol and pretrained feature extractor** | Very compact model with only 263K parameters | Models disease relationships and uncertainty |
-| Main limitation | Local test is not the official CheXpert test benchmark | Tiny validation set and no local test split | Long training time, frozen backbone, tiny validation set |
-| Evaluation reliability | **Highest among the three for local held-out evaluation** | Lower — validation-only | Lower — validation-only |
+| Main limitation | The uncertainty-handling strategy is a modeling choice rather than a proven-optimal strategy. | Tiny validation set and no local test split | Long training time, frozen backbone, tiny validation set |
+| Evaluation reliability | **Highest among the three for local held-out evaluation** | validation-only | validation-only |
 
 ## Overall Takeaway
 
